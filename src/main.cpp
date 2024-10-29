@@ -1,5 +1,4 @@
-#include <particle_filter/kernels/add.cu>
-
+#include
 int main()
 {
 

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(particle_filter LANGUAGES CXX CUDA)
+project(kernel_test LANGUAGES CXX CUDA)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD REQUIRED)
-add_subdirector(kernels)
+set(CMAKE_CXX_STANDARD_REQUIRED)
+add_subdirectory(kernels)
 
-find_package(CUDA)
+#find_package(CUDA)
 
 add_executable(main)
 target_sources(main
@@ -13,7 +13,7 @@ target_sources(main
 )
 
 target_include_directories(main 
-                            "${CMAKE_SOURCE_DIR}/include
-                            "${CMAKE_SOURCE_DIR}/kernels
+                            PRIVATE "${CMAKE_SOURCE_DIR}/include"
+                            PRIVATE"${CMAKE_SOURCE_DIR}/kernels"
 )
 
