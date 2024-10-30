@@ -1,8 +1,8 @@
 project(kernels LANGUAGES CXX CUDA)
 
-add_library(kernels SHARED add.cu)
+add_library(kernels SHARED add.cu add.cuh)
 
-target_include_directories(kernels PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(kernels PUBLIC "${CMAKE_SOURCE_DIR}/kernels/")
 
 target_compile_features(kernels PUBLIC cuda_std_20)
 
