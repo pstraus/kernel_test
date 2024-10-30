@@ -1,8 +1,8 @@
-#include <kernel_test/kernels/add.cuh>
+#include <add.cuh>
 
 int main()
 {
- int N = 1 << 20;
+ int N = 1000000;
   float *x, *y, *out;
 
   // Allocate Unified Memory – accessible from CPU or GPU
@@ -18,7 +18,7 @@ int main()
   }
 
   // Run kernel on 1M elements on the GPU
-  add<<<1, 1>>>(N, x, y, out);
+  add<<<256, 1>>>(N, x, y, out);
 
   // Wait for GPU to finish before accessing on host
   cudaDeviceSynchronize();
@@ -26,7 +26,9 @@ int main()
   // Check for errors (all values should be 3.0f)
   float maxError = 0.0f;
   for (int i = 0; i < N; i++)
+  {
     maxError = fmax(maxError, fabs(out[i] - 3.0f));
+  }
   std::cout << "Max error: " << maxError << std::endl;
 
   // Free memory
