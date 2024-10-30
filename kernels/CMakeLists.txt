@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 3.28.3)
 project(kernels LANGUAGES CXX CUDA)
 
 add_library(kernels STATIC add.cu)
+
+target_include_directories(kernels PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_compile_features(kernels PUBLIC cuda_std_20)
 
