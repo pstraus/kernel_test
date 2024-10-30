@@ -1,6 +1,7 @@
 project(kernel_test_main)
 
 #find_package(CUDA)
+add_library( kernels STATIC "${CMAKE_SOURCE_DIR}/kernels/add.cu")
 add_executable(main main.cu)
 
 target_include_directories(main 
