@@ -46,7 +46,7 @@ namespace cmem
         {
             std::stringstream error;
             error << "Error!  Attempted to access index: " << i << " which is out of bounds of object with size: " << N << "!" << std::endl;
-            throw(std::out_of_range(error));
+            throw(std::out_of_range(error.str()));
         }
         return this->ptr[i];
     }

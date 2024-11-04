@@ -14,7 +14,7 @@ namespace math::se
         int i = threadIdx.x + blockDim.x * blockIdx.x;
         if (i < n)
         {
-            p[i]->getState() = *F * p[i]->getState;
+            p[i].getState() = *F * p[i].getState();
         }
     }
 }

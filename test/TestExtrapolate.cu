@@ -23,7 +23,7 @@ TEST(TestExtrapolate, identity_single)
   cudaDeviceSynchronize();
 
   // Make sure the particle is still valid
-  EXPECT_EQ(p[0].getState()[0], 1);
-  EXPECT_EQ(p[0].getState()[1], 2);
-  EXPECT_EQ(p[0].getState()[2], 3);
+  EXPECT_EQ(p[0].getState()[0], 1) << "Expected: 1, got: " << p[0].getState()[0];
+  EXPECT_EQ(p[0].getState()[1], 2) << "Expected: 2, got: " << p[0].getState()[1];
+  EXPECT_EQ(p[0].getState()[2], 3) << "Expected: 3, got: " << p[0].getState()[2];
 }

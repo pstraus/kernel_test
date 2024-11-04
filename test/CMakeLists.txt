@@ -1,23 +1,25 @@
-project(test)
+project(unitTests)
 
 enable_testing()
+find_package(GTest CONFIG REQUIRED)
 include(GoogleTest)
 
 find_package(Eigen3 REQUIRED)
 
-add_executable(test)
+add_executable(unitTests)
 
-target_include_directories(test 
-                            PRIVATE "${CMAKE_SOURCE_DIR}/include/"
-                            PRIVATE "${CMAKE_SOURCE_DIR}/kernels/"
+target_include_directories(unitTests 
+                            PUBLIC "${CMAKE_SOURCE_DIR}/include/"
+                            PUBLIC "${CMAKE_SOURCE_DIR}/kernels/"
 )
-target_sources(test
+target_sources(unitTests
                 PUBLIC
                     "TestExtrapolate.cu")
 
-target_link_libraries(test 
+target_link_libraries(unitTests 
                             PRIVATE kernels 
                             PRIVATE Eigen3::Eigen 
-                            PRIVATE gtest gtrest_main pthread)
+                            PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main)
 
 
+gtest_discover_tests(unitTests)
