@@ -1,6 +1,8 @@
 project(kernels LANGUAGES CXX CUDA)
 
-add_library(kernels SHARED add.cu add.cuh)
+find_package(Eigen3 CONFIG REQUIRED)
+
+add_library(kernels STATIC add.cu add.cuh)
 
 include_directories(kernels PUBLIC 
                     "${CMAKE_SOURCE_DIR}/kernels/"
