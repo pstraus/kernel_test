@@ -1,50 +1,65 @@
 #pragma once
+#include <stdexcept>
+#include <sstream>
 
 namespace cmem
 {
-template <typename T>
-class CudaManagedArray
-{
-    public: 
+    template <typename T>
+    class CudaManagedArray
+    {
+    public:
         CudaManagedArray() = delete;
         explicit CudaManagedArray(int N);
         ~CudaManagedArray();
 
-        CudaManagedArray(const CudaManagedArray& ) = delete;
+        CudaManagedArray(const CudaManagedArray &) = delete;
 
-        T& operator[](int i);
+        T &operator[](int i);
 
-        T* get();
+        T *get();
 
-        //TODO: move / copy constructors.
+        int size();
+
+        // TODO: move / copy constructors.
 
     private:
-        T* ptr;
+        T *ptr;
+        int N;
+    };
 
-};
+    template <typename T>
+    CudaManagedArray<T>::CudaManagedArray(int N)
+    {
+        cudaMallocManaged(&ptr, N * sizeof(T));
+    }
 
+    template <typename T>
+    CudaManagedArray<T>::~CudaManagedArray()
+    {
+        cudaFree(ptr);
+    }
 
-template <typename T>
-CudaManagedArray<T>::CudaManagedArray(int N)
-{
-    cudaMallocManaged(&ptr,   N * sizeof(T));
-}
+    template <typename T>
+    T &CudaManagedArray<T>::operator[](int i)
+    {
+        if (i >= N)
+        {
+            std::stringstream error;
+            error << "Error!  Attempted to access index: " << i << " which is out of bounds of object with size: " << N << "!" << std::endl;
+            throw(std::out_of_range(error));
+        }
+        return this->ptr[i];
+    }
 
-template <typename T>
-CudaManagedArray<T>::~CudaManagedArray()
-{
-    cudaFree(ptr);
-}
+    template <typename T>
+    T *CudaManagedArray<T>::get()
+    {
+        return this->ptr;
+    }
 
-template <typename T>
-T& CudaManagedArray<T>::operator[](int i)
-{
-    return this->ptr[i];
-}
-
-template <typename T>
-T* CudaManagedArray<T>::get()
-{
-    return this->ptr;
-}
+    template <typename T>
+    int CudaManagedArray<T>::size()
+    {
+        return this->N;
+    }
 }

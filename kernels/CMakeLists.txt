@@ -1,7 +1,5 @@
 project(kernels LANGUAGES CXX CUDA)
 
-find_package(Eigen3 CONFIG REQUIRED)
-
 add_library(kernels STATIC add.cu add.cuh)
 
 include_directories(kernels PUBLIC 
@@ -15,5 +13,8 @@ set_target_properties(kernels
                             CUDA_RUNTIME_LIBRARY Shared
                             CUDA_SEPARABLE_COMPILATION ON
 )
+
+target_link_libraries(kernels 
+                        PUBLIC Eigen3::Eigen)
 
 
