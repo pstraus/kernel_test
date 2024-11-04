@@ -28,7 +28,7 @@ namespace cmem
     };
 
     template <typename T>
-    CudaManagedArray<T>::CudaManagedArray(int N)
+    CudaManagedArray<T>::CudaManagedArray(int N) : N{N}
     {
         cudaMallocManaged(&ptr, N * sizeof(T));
     }
