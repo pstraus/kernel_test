@@ -14,7 +14,8 @@ target_include_directories(unitTests
 )
 target_sources(unitTests
                 PUBLIC
-                    "TestExtrapolate.cu")
+                    "TestExtrapolateState.cu"
+                    "TestExtrapolateStateAndCovariance.cu")
 
 target_link_libraries(unitTests 
                             PRIVATE kernels 

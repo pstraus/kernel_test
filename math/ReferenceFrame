@@ -1,0 +1,24 @@
+#include <Eigen>
+
+enum class CoordinateSystem
+{
+    ecef,
+    cartesian_relative,
+    spherical,
+    modified_spherical,
+    conical,
+    modified_conical
+}
+
+class ReferenceFrameBase
+{
+    /// \brief everything relative to ECEF
+
+    public:
+        Eigen::Matrix<float, 3, 3> getRotationToECEF();
+
+
+    private:
+        Eigen::Matrix<float, 3, 3> mRotationToECEF;
+        Eigen::Vector<float, 3> mOrigin;
+}

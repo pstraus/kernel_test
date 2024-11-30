@@ -1,10 +1,10 @@
-#include <extrapolate.cuh>
+#include <extrapolateState.cuh>
 #include <CudaManagedArray.h>
 #include <Particle.h>
 
 #include <gtest/gtest.h>
 
-TEST(TestExtrapolate, identity_single)
+TEST(TestExtrapolateState, identity_single)
 {
   int N = 1e3;
 
@@ -25,7 +25,7 @@ TEST(TestExtrapolate, identity_single)
   int numThreads = 256;
   int numBlocks = N / numThreads;
   numBlocks++;
-  math::se::extrapolate<<<numBlocks, numThreads>>>(N, p.get(), F.get());
+  math::se::extrapolateState<<<numBlocks, numThreads>>>(N, p.get(), F.get());
 
   // Wait for GPU to finish before accessing on host
   cudaDeviceSynchronize();
@@ -60,7 +60,7 @@ TEST(TestExtrapolate, not_identity)
   int numThreads = 256;
   int numBlocks = N / numThreads;
   numBlocks++;
-  math::se::extrapolate<<<numBlocks, numThreads>>>(N, p.get(), F.get());
+  math::se::extrapolateState<<<numBlocks, numThreads>>>(N, p.get(), F.get());
 
   // Wait for GPU to finish before accessing on host
   cudaDeviceSynchronize();
